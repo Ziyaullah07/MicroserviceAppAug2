@@ -1,4 +1,5 @@
-﻿using eShopFlix.Web.HttpClients;
+﻿using eShopFlix.Web.Helpers;
+using eShopFlix.Web.HttpClients;
 using eShopFlix.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -73,5 +74,21 @@ namespace eShopFlix.Web.Controllers
             }
             return Json(0);
         }
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Checkout(AddressModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                TempData.Set("Address", model);
+                return RedirectToAction("Index", "Payment");
+            }
+            return View();
+        }
+
     }
 }

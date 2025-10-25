@@ -28,6 +28,12 @@ builder.Services.AddScoped<CartServiceClient>(client => {
     var httpClient = httpClientFactory.CreateClient("HttpClient");
     return new CartServiceClient(httpClient);
 });
+builder.Services.AddScoped<PaymentServiceClient>(client => {
+    var httpClientFactory = builder.Services.BuildServiceProvider().GetRequiredService<IHttpClientFactory>();
+
+    var httpClient = httpClientFactory.CreateClient("HttpClient");
+    return new PaymentServiceClient(httpClient);
+});
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
