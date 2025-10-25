@@ -1,3 +1,4 @@
+using CartService.Application.Services.Implementations;
 using eShopFlix.Web.HttpClients;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -21,7 +22,12 @@ builder.Services.AddScoped<AuthServiceClient>(client => {
     var httpClient = httpClientFactory.CreateClient("HttpClient");
     return new AuthServiceClient(httpClient);
 });
+builder.Services.AddScoped<CartServiceClient>(client => {
+    var httpClientFactory = builder.Services.BuildServiceProvider().GetRequiredService<IHttpClientFactory>();
 
+    var httpClient = httpClientFactory.CreateClient("HttpClient");
+    return new CartServiceClient(httpClient);
+});
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
